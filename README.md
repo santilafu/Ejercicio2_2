@@ -107,9 +107,12 @@ El código utiliza CREATE TABLE IF NOT EXISTS, por lo que no fallará si la tabl
 
 El servidor MySQL debe estar activo antes de ejecutar el programa.
 ```
-✍️ Autor
+## ✍️ Autor
+
 Santiago Lafuente Hernández
+
 Acceso a Datos - 2º DAM
+
 (Desarrollado y documentado con la ayuda de ChatGPT para redacción técnica y guía práctica.)
 
 # **💾 Ejercicio 2.3 – Inserción de datos en la tabla productos**
@@ -212,7 +215,8 @@ El código puede ejecutarse varias veces sin dañar la base de datos si cambias 
 <img src="Captura de pantalla 2025-11-07 123158.png" alt= "Vista tabla productos en MySQL Workbench" width="300"/>
 </p>
 
-✍️ Autor
+## ✍️ Autor
+
 Santiago Lafuente Hernández
 
 Acceso a Datos - 2º DAM
