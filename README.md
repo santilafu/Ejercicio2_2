@@ -112,14 +112,15 @@ Santiago Lafuente Hernández
 Acceso a Datos - 2º DAM
 (Desarrollado y documentado con la ayuda de ChatGPT para redacción técnica y guía práctica.)
 
-💾 Ejercicio 2.3 – Inserción de datos en la tabla productos
+# **💾 Ejercicio 2.3 – Inserción de datos en la tabla productos**
+
 Descripción:
 Continuando con el ejercicio anterior (Ejercicio 2.2), en esta práctica se amplía el programa para insertar registros en la tabla productos de la base de datos TiendaPc.
 El objetivo es comprobar que la conexión y la inserción de datos funcionan correctamente desde una aplicación Java mediante JDBC.
 
 🧠 Código Java – Ejercicio 2.3
-java
-Copiar código
+
+```java
 // Creamos una clase para introducir los datos en la tabla 'productos' creada en el ejercicio anterior.
 // Importamos lo necesario para manejar BBDD MySQL.
 import java.sql.Connection;
@@ -182,15 +183,18 @@ Copiar código
 ✅ Producto 3 insertado correctamente.
 Y en MySQL Workbench, si ejecutas:
 
-sql
-Copiar código
+
 SELECT * FROM productos;
+
+
 Obtendrás:
 
 id	nombreProduct	fabricante
 1	Portátil Gamer XYZ	MSI
 2	Monitor UltraWide 34"	LG
 3	Teclado Mecánico RGB	Corsair
+
+```
 
 📘 Notas importantes
 El PreparedStatement permite usar parámetros ? para evitar errores de formato o inyecciones SQL.
