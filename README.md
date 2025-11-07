@@ -331,3 +331,133 @@ Santiago Lafuente Hernández
 Acceso a Datos - 2º DAM
 
 (Desarrollo y documentación realizada con la ayuda de ChatGPT para guía técnica y redacción profesional.)
+
+# 💾 Ejercicio 2.5 – Llamada a procedimiento almacenado (listadoClientes)
+
+**Descripción:**  
+En este ejercicio, Juan desea automatizar la obtención de la información de su clientela,  
+incluyendo su **NIF**, **nombre** y **teléfono**.  
+Para ello, se implementa un procedimiento almacenado en MySQL denominado **`listadoClientes`**,  
+y una aplicación Java que lo invoca mediante JDBC.
+
+El objetivo es aprender a **ejecutar procedimientos almacenados** y **recibir resultados** en una aplicación Java.
+
+---
+
+## 🧩 Creación del procedimiento en MySQL
+
+Antes de ejecutar el programa, asegúrate de crear la tabla y el procedimiento en tu base de datos **TiendaPc**:
+
+```sql
+USE TiendaPc;
+
+CREATE TABLE IF NOT EXISTS clientes (
+    nif VARCHAR(9) PRIMARY KEY,
+    nombre VARCHAR(50),
+    telefono VARCHAR(15)
+);
+
+INSERT INTO clientes (nif, nombre, telefono) VALUES
+('12345678A', 'Carlos Pérez', '600123456'),
+('98765432B', 'Lucía García', '600654321'),
+('55555555C', 'María López', '611222333'),
+('11223344D', 'Raúl Martínez', '600999888'),
+('22334455E', 'Sofía Torres', '601777666'),
+('33445566F', 'Álvaro Romero', '602555444'),
+('44556677G', 'Patricia Sánchez', '603333222'),
+('55667788H', 'Javier Navarro', '604111000');
+
+DELIMITER //
+CREATE PROCEDURE listadoClientes()
+BEGIN
+    SELECT nif, nombre, telefono FROM clientes;
+END //
+DELIMITER ;
+```
+--- 
+
+## 🧠 Código Java – Ejercicio 2.5
+
+```java
+/* Juan desea automatizar la obtención de la información de su clientela, incluyendo su NIF, nombre y teléfono.
+Para lograrlo, busca implementar un procedimiento que le permita obtener esta información con una sola llamada,
+agilizando así el proceso de obtención de datos de su clientela.
+ */
+// Importamos lo necesario para manejar BBDD MySQL.
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.ResultSet;
+public class Ejercicio2_5 {
+    public static void main (String[] args) {
+
+        // Datos de la conexión a la base de datos MySQL
+        String url = "jdbc:mysql://localhost:3306/TiendaPc";
+        String user = "root";
+        String password = "B@se1234Datos";
+        // Intentamos conectar
+        try {
+            Connection con = DriverManager.getConnection(url, user, password);
+            System.out.println("✅ Conexión establecida correctamente.");
+            // Creamos el objeto Statement para ejecutar sentencias SQL
+            Statement st = con.createStatement();
+            // Preparamos la sentencia SQL para llamar al procedimiento almacenado
+            String sql = "CALL listadoClientes()";
+            // Ejecutamos la consulta y obtenemos el ResultSet
+            ResultSet rs = st.executeQuery(sql);
+            // Recorremos el ResultSet y mostramos los datos de cada cliente
+            System.out.println("Lista de clientela:");
+            while (rs.next()) {
+                String nif = rs.getString("NIF");
+                String nombre = rs.getString("Nombre");
+                String telefono = rs.getString("Telefono");
+                System.out.println("NIF: " + nif + ", Nombre: " + nombre + ", Teléfono: " + telefono);
+            }
+            // Cerramos el ResultSet, el Statement y la conexión
+            rs.close();
+            st.close();
+            con.close();
+        } catch (SQLException e) {
+            System.out.println("❌ Error al conectar o consultar datos: " + e.getMessage());
+        }
+    }
+}
+```
+--- 
+
+## ✅ Resultado esperado  
+En la consola aparecerá:
+✅ Conexión establecida correctamente.
+``````
+📋 Listado de clientes:
+
+NIF: 12345678A | Nombre: Carlos Pérez | Teléfono: 600123456
+NIF: 98765432B | Nombre: Lucía García | Teléfono: 600654321
+NIF: 55555555C | Nombre: María López | Teléfono: 611222333
+NIF: 11223344D | Nombre: Raúl Martínez | Teléfono: 600999888
+NIF: 22334455E | Nombre: Sofía Torres | Teléfono: 601777666
+NIF: 33445566F | Nombre: Álvaro Romero | Teléfono: 602555444
+NIF: 44556677G | Nombre: Patricia Sánchez | Teléfono: 603333222
+NIF: 55667788H | Nombre: Javier Navarro | Teléfono: 604111000
+``````
+--- 
+## 📘 Notas importantes
+
+CallableStatement se usa para invocar procedimientos almacenados en MySQL (CALL nombreProcedimiento()).
+
+ResultSet permite recorrer los resultados de la consulta dentro del procedimiento.
+
+Si el procedimiento no existe, MySQL lanzará un error de tipo "Procedure not found".
+
+Siempre cierra los recursos (ResultSet, CallableStatement, Connection) para evitar fugas de memoria.
+
+---
+
+## ✍️ Autor
+
+Santiago Lafuente Hernández
+
+Acceso a Datos - 2º DAM
+
+(Desarrollo y documentación realizada con la ayuda de ChatGPT para guía técnica y redacción profesional.)
