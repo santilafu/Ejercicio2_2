@@ -223,3 +223,111 @@ Acceso a Datos - 2º DAM
 
 (Desarrollo y documentación realizada con la ayuda de ChatGPT para guía técnica y redacción profesional.)
 
+# 💾 Ejercicio 2.4 – Consulta de datos en la tabla productos
+
+**Descripción:**  
+Juan ha introducido varios datos en la tabla `productos` de la base de datos **TiendaPc**,  
+y ahora se requiere comprobar que la información se ha insertado correctamente.  
+Para ello, se crea una clase en Java que consulta todos los registros y los muestra por consola.
+
+El objetivo es practicar la **lectura de datos mediante JDBC**, utilizando `SELECT` y recorriendo los resultados con `ResultSet`.
+
+---
+
+## 🧠 Código Java – Ejercicio 2.4
+
+```java
+// En esta clase haremos una consulta a la tabla 'productos' y mostraremos por consola los datos de todos los productos almacenados en la tabla.
+// Importamos lo necesario para manejar BBDD MySQL.
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.ResultSet;
+
+public class Ejercicio2_4 {
+    public static void main(String[] args) {
+
+        // Datos de la conexión a la base de datos MySQL
+        String url = "jdbc:mysql://localhost:3306/TiendaPc";
+        String user = "root";
+        String password = "B@se1234Datos";
+
+        // Intentamos conectar
+        try {
+            Connection con = DriverManager.getConnection(url, user, password);
+            System.out.println("✅ Conexión establecida correctamente.");
+
+            // Creamos el objeto Statement para ejecutar sentencias SQL
+            Statement st = con.createStatement();
+
+            // Preparamos la sentencia SQL para consultar todos los productos
+            String sql = "SELECT * FROM productos";
+
+            // Ejecutamos la consulta y obtenemos el ResultSet
+            ResultSet rs = st.executeQuery(sql);
+
+            // Recorremos el ResultSet y mostramos los datos de cada producto
+            System.out.println("\n📋 Lista de productos:\n");
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String nombreProduct = rs.getString("nombreProduct");
+                String fabricante = rs.getString("fabricante");
+                System.out.println("ID: " + id + " | Nombre: " + nombreProduct + " | Fabricante: " + fabricante);
+            }
+
+            // Cerramos el ResultSet, el Statement y la conexión
+            rs.close();
+            st.close();
+            con.close();
+
+        } catch (SQLException e) {
+            System.out.println("❌ Error al conectar o consultar datos: " + e.getMessage());
+        }
+    }
+}
+```
+---
+## ✅ Resultado esperado  
+En la consola aparecerá:
+
+✅ Conexión establecida correctamente.
+
+📋 Lista de productos:
+
+ID: 1 | Nombre: Portátil Gamer XYZ | Fabricante: MSI  
+ID: 2 | Nombre: Monitor UltraWide 34" | Fabricante: LG  
+ID: 3 | Nombre: Teclado Mecánico RGB | Fabricante: Corsair
+
+---
+
+## 🧩 Explicación del funcionamiento
+
+Connection → establece la conexión con la base de datos.
+
+Statement → permite ejecutar sentencias SQL (en este caso, SELECT).
+
+ResultSet → almacena los resultados obtenidos y se recorre con while (rs.next()).
+
+Cada fila se lee campo a campo con getInt() y getString().
+
+Este enfoque permite leer toda la información almacenada en la tabla de forma secuencial.
+
+---
+## 📘 Notas importantes
+
+Si no hay datos en la tabla, la consola no mostrará registros.
+
+El método rs.close() es obligatorio para liberar los recursos del sistema.
+
+Si cambias el nombre de la tabla o los campos, también deberás actualizar la sentencia SQL.
+
+---
+
+## ✍️ Autor
+
+Santiago Lafuente Hernández
+
+Acceso a Datos - 2º DAM
+
+(Desarrollo y documentación realizada con la ayuda de ChatGPT para guía técnica y redacción profesional.)
