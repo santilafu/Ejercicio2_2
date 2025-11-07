@@ -106,7 +106,7 @@ No se sube la base de datos real a GitHub, solo el script SQL (incluido arriba).
 El código utiliza CREATE TABLE IF NOT EXISTS, por lo que no fallará si la tabla ya existe.
 
 El servidor MySQL debe estar activo antes de ejecutar el programa.
-
+```
 ✍️ Autor
 Santiago Lafuente Hernández
 Acceso a Datos - 2º DAM
@@ -203,11 +203,15 @@ El cierre de conexión (close()) es obligatorio para liberar recursos.
 
 El código puede ejecutarse varias veces sin dañar la base de datos si cambias los IDs.
 
-Foto de MySQL WorkBench
-![img.png](img.png)
+## 📸**Foto de MySQL WorkBench**
+<p aling="center">
+<img src="Captura de pantalla 2025-11-07 123158.png" alt= "Vista tabla productos en MySQL Workbench" width="300"/>
+</p>
 
 ✍️ Autor
 Santiago Lafuente Hernández
+
 Acceso a Datos - 2º DAM
+
 (Desarrollo y documentación realizada con la ayuda de ChatGPT para guía técnica y redacción profesional.)
 
